@@ -1,0 +1,76 @@
+volunteer-management/
+├── public/
+│   ├── index.html           # Root HTML file
+│   ├── favicon.ico          # Favicon for the website
+│   └── ...                  # Other static assets
+├── src/
+│   ├── assets/              # Images, icons, fonts
+│   │   ├── logo.png
+│   │   ├── banner.jpg
+│   │   └── ...
+│   ├── components/          # Reusable components
+│   │   ├── Navbar.jsx
+│   │   ├── Footer.jsx
+│   │   ├── Spinner.jsx
+│   │   ├── Modal.jsx
+│   │   └── ...
+│   ├── contexts/            # Context API for global state management
+│   │   ├── AuthContext.jsx
+│   │   ├── ThemeContext.jsx
+│   │   └── ...
+│   ├── hooks/               # Custom hooks
+│   │   ├── useAuth.jsx
+│   │   ├── useTheme.jsx
+│   │   └── ...
+│   ├── layouts/             # Shared layout components
+│   │   ├── MainLayout.jsx
+│   │   ├── ProfileLayout.jsx
+│   │   └── ...
+│   ├── pages/               # Main page components
+│   │   ├── Home/
+│   │   │   ├── Home.jsx
+│   │   │   ├── Banner.jsx
+│   │   │   ├── VolunteerSection.jsx
+│   │   │   ├── ExtraSectionOne.jsx
+│   │   │   ├── ExtraSectionTwo.jsx
+│   │   │   └── ...
+│   │   ├── Auth/
+│   │   │   ├── Login.jsx
+│   │   │   ├── Register.jsx
+│   │   │   └── ...
+│   │   ├── Volunteer/
+│   │   │   ├── AllPosts.jsx
+│   │   │   ├── PostDetails.jsx
+│   │   │   ├── AddPost.jsx
+│   │   │   ├── ManagePosts.jsx
+│   │   │   └── ...
+│   │   ├── Profile/
+│   │   │   ├── MyProfile.jsx
+│   │   │   ├── MyRequests.jsx
+│   │   │   └── ...
+│   │   ├── Shared/
+│   │   │   ├── NotFound.jsx
+│   │   │   ├── Spinner.jsx
+│   │   │   └── ...
+│   ├── routes/              # Route configurations
+│   │   ├── PrivateRoute.jsx
+│   │   ├── PublicRoute.jsx
+│   │   ├── RouterConfig.jsx
+│   │   └── ...
+│   ├── services/            # API and Axios configurations
+│   │   ├── apiClient.js
+│   │   ├── volunteerService.js
+│   │   ├── authService.js
+│   │   └── ...
+│   ├── styles/              # Tailwind CSS and DaisyUI customizations
+│   │   ├── tailwind.css
+│   │   ├── variables.css
+│   │   └── ...
+│   ├── App.js               # Main application file
+│   ├── index.js             # React entry point
+│   ├── firebaseConfig.js    # Firebase configuration
+│   └── .env                 # Environment variables
+├── .gitignore               # Git ignore file
+├── package.json             # Project dependencies and scripts
+├── README.md                # Project documentation
+└── tailwind.config.js       # Tailwind CSS configuration
