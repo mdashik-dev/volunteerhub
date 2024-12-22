@@ -11,6 +11,7 @@ import AddVolunteerNeedPost from "./pages/Posts/AddVolunteerNeedPost";
 import PrivateRoute from "./components/PrivateRoute";
 import AllVolunteerPosts from "./pages/Posts/Posts";
 import ManageMyVolunteerPosts from "./pages/Posts/ManageMyVolunteerPosts";
+import { AuthProvider } from "./contexts/AuthContext";
 
 const router = createBrowserRouter([
   {
@@ -46,11 +47,13 @@ const router = createBrowserRouter([
 
 const App = () => {
   return (
-    <ThemeProvider>
-      <HelmetProvider>
-        <RouterProvider router={router} />
-      </HelmetProvider>
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider>
+        <HelmetProvider>
+          <RouterProvider router={router} />
+        </HelmetProvider>
+      </ThemeProvider>
+    </AuthProvider>
   );
 };
 

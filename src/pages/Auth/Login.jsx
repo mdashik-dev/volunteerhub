@@ -1,23 +1,54 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+import Swal from "sweetalert2";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import SocialLogin from "./SocialLogin";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const { user, loginWithEmailAndPass } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (user?.uid) {
+      if (location?.state?.from) {
+        navigate(location.state.from.pathname);
+      } else {
+        navigate("/");
+      }
+    }
+  }, [user, navigate, location?.state?.from]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !password) {
       setError("Please fill in all fields.");
     } else {
       setError("");
-      console.log("Form submitted:", { email, password });
+      setLoading(true);
+      try {
+        await loginWithEmailAndPass(email, password);
+        Swal.fire("Success", "You have logged in successfully!", "success");
+      } catch (error) {
+        Swal.fire(
+          "Error",
+          error.message || "Login failed. Please try again.",
+          "error"
+        );
+      } finally {
+        setLoading(false);
+      }
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 dark:text-white">
-      <div className="w-full max-w-sm bg-white dark:dark:bg-gray-800 p-6 rounded-lg shadow-md">
+      <div className="w-full max-w-sm bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center mb-4">
           Sign in to your account
         </h2>
@@ -63,35 +94,45 @@ const LoginPage = () => {
 
           <button
             type="submit"
-            className="w-full py-2 bg-primary text-white font-medium rounded-md"
+            className="w-full py-2 bg-primary text-white font-medium rounded-md flex items-center justify-center"
+            disabled={loading}
           >
-            Sign in
+            {loading ? (
+              <svg
+                className="animate-spin h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"
+                ></path>
+              </svg>
+            ) : (
+              "Sign in"
+            )}
           </button>
         </form>
-        <div className="divider divider-primary">
-          Login with social account
-        </div>
-        <div className="flex justify-center space-x-4">
-          <button aria-label="Log in with Google" className="p-3 rounded-full hover:bg-primary hover:text-white duration-300">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 32 32"
-              className="w-5 h-5 fill-current"
-            >
-              <path d="M16.318 13.714v5.484h9.078c-0.37 2.354-2.745 6.901-9.078 6.901-5.458 0-9.917-4.521-9.917-10.099s4.458-10.099 9.917-10.099c3.109 0 5.193 1.318 6.38 2.464l4.339-4.182c-2.786-2.599-6.396-4.182-10.719-4.182-8.844 0-16 7.151-16 16s7.156 16 16 16c9.234 0 15.365-6.49 15.365-15.635 0-1.052-0.115-1.854-0.255-2.651z"></path>
-            </svg>
-          </button>
+        <SocialLogin />
 
-        </div>
         <p className="text-xs text-center sm:px-6 dark:text-gray-600">
-          Don't have an account? {" "}
-          <a
-            rel="noopener noreferrer"
-            href="/register"
+          Don't have an account?{" "}
+          <Link
+            to="/register"
             className="underline text-gray-800 dark:text-white"
           >
-             Sign up
-          </a>
+            Sign up
+          </Link>
         </p>
       </div>
     </div>

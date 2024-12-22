@@ -3,19 +3,18 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { IoIosMoon } from "react-icons/io";
 import { MdSunny } from "react-icons/md";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { AuthContext } from "../contexts/AuthContext";
 
 const Navbar = () => {
   const { theme, setTheme } = useContext(ThemeContext);
-  const [user, setUser] = useState(null);
+  const { user, logOut } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const location = useLocation();
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
-
-  const handleLogout = async () => {};
-
   const isActive = (path) => location.pathname === path;
 
   return (
@@ -67,17 +66,14 @@ const Navbar = () => {
                   </Link>
                 </li>
                 <li>
-                  <details>
-                    <summary>My Profile</summary>
-                    <ul className="bg-base-100 rounded-t-none p-2">
-                      <li>
-                        <a>Add Volunteer Need Post</a>
-                      </li>
-                      <li>
-                        <a>Manage My Posts</a>
-                      </li>
-                    </ul>
-                  </details>
+                  <Link
+                    to="/login"
+                    className={
+                      isActive("/login") ? "bg-primary text-white" : ""
+                    }
+                  >
+                    Login
+                  </Link>
                 </li>
               </ul>
             </div>
@@ -107,35 +103,6 @@ const Navbar = () => {
                   All Volunteer Posts
                 </Link>
               </li>
-              <li>
-                <details>
-                  <summary>My Profile</summary>
-                  <ul className="bg-base-100 rounded-t-none w-60 p-2 z-50">
-                    <li>
-                      <Link
-                        to="/add-post"
-                        className={
-                          isActive("/add-post") ? "bg-primary text-white" : ""
-                        }
-                      >
-                        Add Volunteer Need Post
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        to="/manage-post"
-                        className={
-                          isActive("/manage-post")
-                            ? "bg-primary text-white"
-                            : ""
-                        }
-                      >
-                        Manage My Posts
-                      </Link>
-                    </li>
-                  </ul>
-                </details>
-              </li>
             </ul>
           </div>
 
@@ -157,23 +124,37 @@ const Navbar = () => {
                 <label tabIndex={0} className="btn btn-ghost btn-circle">
                   <img
                     src={user.photoURL}
-                    alt="User"
+                    alt={user.displayName}
                     className="w-10 h-10 rounded-full"
                     title={user.displayName}
                   />
                 </label>
                 <ul
                   tabIndex={0}
-                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
+                  className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 mt-5"
                 >
                   <li>
-                    <Link to="/add-post">Add Volunteer Need Post</Link>
+                    <Link
+                      to="/add-post"
+                      className={
+                        isActive("/add-post") ? "bg-primary text-white" : ""
+                      }
+                    >
+                      Add Volunteer Need Post
+                    </Link>
                   </li>
                   <li>
-                    <Link to="/manage-posts">Manage My Posts</Link>
+                    <Link
+                      to="/manage-post"
+                      className={
+                        isActive("/manage-post") ? "bg-primary text-white" : ""
+                      }
+                    >
+                      Manage My Posts
+                    </Link>
                   </li>
                   <li>
-                    <button onClick={handleLogout} className="btn btn-ghost">
+                    <button onClick={logOut} className="px-4 py-2">
                       Logout
                     </button>
                   </li>
