@@ -9,32 +9,38 @@ import Error from "./components/Error";
 import { HelmetProvider } from "react-helmet-async";
 import AddVolunteerNeedPost from "./pages/Posts/AddVolunteerNeedPost";
 import PrivateRoute from "./components/PrivateRoute";
+import AllVolunteerPosts from "./pages/Posts/Posts";
+import ManageMyVolunteerPosts from "./pages/Posts/ManageMyVolunteerPosts";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
     errorElement: <Error />,
-    // ErrorBoundary: <Error />,
     children: [
       { path: "/", element: <Home /> },
       { path: "/login", element: <LoginPage /> },
       { path: "/register", element: <RegisterPage /> },
+      { path: "/posts", element: <AllVolunteerPosts /> },
       // { path: "/volunteer/:id", element: <VolunteerDetailsPage /> },
-      { path: "/posts", element: <AddVolunteerNeedPost /> },
+      {
+        path: "/add-post",
+        element: (
+          <PrivateRoute>
+            <AddVolunteerNeedPost />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/manage-post",
+        element: (
+          <PrivateRoute>
+            <ManageMyVolunteerPosts />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
-  // {
-  //   path: "/profile",
-  //   element: (
-  //     <PrivateRoute>
-  //       {/* <ProfileLayout /> */}
-  //     </PrivateRoute>
-  //   ),
-  //   children: [
-  //     // { path: "manage-posts", element: <ManagePostsPage /> },
-  //   ],
-  // },
   { path: "*", element: <NotFound /> },
 ]);
 

@@ -1,30 +1,22 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { IoIosMoon } from "react-icons/io";
 import { MdSunny } from "react-icons/md";
 import { ThemeContext } from "../contexts/ThemeContext";
-// import { auth } from "../firebase"; // Firebase auth import
-// import { signOut } from "firebase/auth"; // Firebase signOut import
 
 const Navbar = () => {
   const { theme, setTheme } = useContext(ThemeContext);
-  const [user, setUser] = useState(null); // Replace with your actual user state management
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
 
-  // Sign out logic
-  const handleLogout = async () => {
-    // try {
-    //   await signOut(auth); // Sign out the user from Firebase
-    //   setUser(null); // Clear the user state
-    //   navigate("/login"); // Redirect to login page
-    // } catch (error) {
-    //   console.error("Error signing out: ", error);
-    // }
-  };
+  const handleLogout = async () => {};
+
+  const isActive = (path) => location.pathname === path;
 
   return (
     <div className="w-full bg-white/45 dark:bg-gray-800/45 sticky top-0 z-40 backdrop-blur-lg">
@@ -57,20 +49,32 @@ const Navbar = () => {
                 className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
               >
                 <li>
-                  <Link to="/">Home</Link>
+                  <Link
+                    to="/"
+                    className={isActive("/") ? "bg-primary text-white" : ""}
+                  >
+                    Home
+                  </Link>
                 </li>
                 <li>
-                  <Link to="/posts">All Volunteer Posts</Link>
+                  <Link
+                    to="/posts"
+                    className={
+                      isActive("/posts") ? "bg-primary text-white" : ""
+                    }
+                  >
+                    All Volunteer Posts
+                  </Link>
                 </li>
                 <li>
                   <details>
                     <summary>My Profile</summary>
                     <ul className="bg-base-100 rounded-t-none p-2">
                       <li>
-                        <a>Add Volunteer need Post</a>
+                        <a>Add Volunteer Need Post</a>
                       </li>
                       <li>
-                        <a>Manage My Posts </a>
+                        <a>Manage My Posts</a>
                       </li>
                     </ul>
                   </details>
@@ -88,20 +92,46 @@ const Navbar = () => {
           <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1 text-sm">
               <li>
-                <Link to="/">Home</Link>
+                <Link
+                  to="/"
+                  className={isActive("/") ? "bg-primary text-white" : ""}
+                >
+                  Home
+                </Link>
               </li>
               <li>
-                <Link to="/posts">All Volunteer Posts</Link>
+                <Link
+                  to="/posts"
+                  className={isActive("/posts") ? "bg-primary text-white" : ""}
+                >
+                  All Volunteer Posts
+                </Link>
               </li>
               <li>
                 <details>
                   <summary>My Profile</summary>
                   <ul className="bg-base-100 rounded-t-none w-60 p-2 z-50">
                     <li>
-                      <a>Add Volunteer need Post</a>
+                      <Link
+                        to="/add-post"
+                        className={
+                          isActive("/add-post") ? "bg-primary text-white" : ""
+                        }
+                      >
+                        Add Volunteer Need Post
+                      </Link>
                     </li>
                     <li>
-                      <a>Manage My Posts </a>
+                      <Link
+                        to="/manage-post"
+                        className={
+                          isActive("/manage-post")
+                            ? "bg-primary text-white"
+                            : ""
+                        }
+                      >
+                        Manage My Posts
+                      </Link>
                     </li>
                   </ul>
                 </details>
@@ -122,7 +152,6 @@ const Navbar = () => {
               )}
             </button>
 
-            {/* Conditional rendering for Login/Logout */}
             {user ? (
               <div className="dropdown dropdown-end">
                 <label tabIndex={0} className="btn btn-ghost btn-circle">
@@ -130,14 +159,13 @@ const Navbar = () => {
                     src={user.photoURL}
                     alt="User"
                     className="w-10 h-10 rounded-full"
-                    title={user.displayName} // Display name on hover
+                    title={user.displayName}
                   />
                 </label>
                 <ul
                   tabIndex={0}
                   className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52"
                 >
-                  {/* Profile Dropdown */}
                   <li>
                     <Link to="/add-post">Add Volunteer Need Post</Link>
                   </li>
