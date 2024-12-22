@@ -4,37 +4,46 @@ import Home from "./pages/Home/Home";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import LoginPage from "./pages/Auth/Login";
 import RegisterPage from "./pages/Auth/Register";
+import NotFound from "./components/NotFound";
+import Error from "./components/Error";
+import { HelmetProvider } from "react-helmet-async";
+import AddVolunteerNeedPost from "./pages/Posts/AddVolunteerNeedPost";
+import PrivateRoute from "./components/PrivateRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout />,
+    errorElement: <Error />,
+    // ErrorBoundary: <Error />,
     children: [
       { path: "/", element: <Home /> },
       { path: "/login", element: <LoginPage /> },
-      { path: "/register", element: <RegisterPage/> },
+      { path: "/register", element: <RegisterPage /> },
       // { path: "/volunteer/:id", element: <VolunteerDetailsPage /> },
+      { path: "/posts", element: <AddVolunteerNeedPost /> },
     ],
   },
   // {
   //   path: "/profile",
   //   element: (
   //     <PrivateRoute>
-  //       <ProfileLayout />
+  //       {/* <ProfileLayout /> */}
   //     </PrivateRoute>
   //   ),
   //   children: [
-  //     { path: "add-post", element: <AddPostPage /> },
-  //     { path: "manage-posts", element: <ManagePostsPage /> },
+  //     // { path: "manage-posts", element: <ManagePostsPage /> },
   //   ],
   // },
-  // { path: "*", element: <NotFoundPage /> },
+  { path: "*", element: <NotFound /> },
 ]);
 
 const App = () => {
   return (
     <ThemeProvider>
-      <RouterProvider router={router} />
+      <HelmetProvider>
+        <RouterProvider router={router} />
+      </HelmetProvider>
     </ThemeProvider>
   );
 };
