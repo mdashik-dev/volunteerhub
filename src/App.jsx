@@ -2,6 +2,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home/Home";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import LoginPage from "./pages/Auth/Login";
+import RegisterPage from "./pages/Auth/Register";
 
 const router = createBrowserRouter([
   {
@@ -9,7 +11,8 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { path: "/", element: <Home /> },
-      // { path: "/login", element: <LoginPage /> },
+      { path: "/login", element: <LoginPage /> },
+      { path: "/register", element: <RegisterPage/> },
       // { path: "/volunteer/:id", element: <VolunteerDetailsPage /> },
     ],
   },
@@ -31,7 +34,7 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <ThemeProvider>
-      <RouterProvider router={router} />;
+      <RouterProvider router={router} />
     </ThemeProvider>
   );
 };
