@@ -3,11 +3,10 @@ import api from "../../services/api";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { PostsSkeleton } from "../../skeletons/PostsSkeleton";
+import moment from "moment";
 
 const SinglePost = () => {
-
   const { id } = useParams();
-
 
   const fetchPost = async () => {
     const response = await api.get(`/myposts?id=${id}`);
@@ -24,7 +23,7 @@ const SinglePost = () => {
   });
 
   if (isLoading) {
-    return <PostsSkeleton/>
+    return <PostsSkeleton />;
   }
 
   if (isError) {
@@ -44,8 +43,8 @@ const SinglePost = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto my-8 p-6 bg-white dark:bg-gray-800 shadow-lg rounded-lg">
-      <figure className="w-full h-64 overflow-hidden rounded-md">
+    <div className="max-w-4xl mx-auto my-8 p-6 bg-white dark:bg-gray-800 rounded-lg">
+      <figure className="w-full h-72 overflow-hidden rounded-md">
         <img
           src={current?.thumbnail}
           alt={current?.postTitle}
@@ -64,6 +63,14 @@ const SinglePost = () => {
           </p>
           <p className="mb-2">
             <strong>Location:</strong> {current?.location}
+          </p>
+          <p className="mb-2">
+            <strong>Volunteers Needed:</strong> {current?.volunteersNeeded}
+          </p>
+
+          <p className="mb-2">
+            <strong>Deadline:</strong>{" "}
+            {moment(current.deadline).format("DD MMMM YYYY")}
           </p>
           <p className="mb-2">
             <strong>Posted By:</strong> {current?.organizerName}

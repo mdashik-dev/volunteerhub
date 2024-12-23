@@ -87,6 +87,17 @@ const UpdatePost = () => {
         className="grid grid-cols-1 md:grid-cols-2 gap-6"
       >
         <div>
+          <label className="block text-sm font-medium mb-1">Post Title</label>
+          <input
+            type="text"
+            name="postTitle"
+            value={formData.postTitle}
+            onChange={handleChange}
+            disabled={isLoading}
+            className="input input-bordered w-full"
+          />
+        </div>
+        <div>
           <label className="block text-sm font-medium mb-1">
             Thumbnail URL
           </label>
@@ -99,17 +110,7 @@ const UpdatePost = () => {
             className="input input-bordered w-full"
           />
         </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">Post Title</label>
-          <input
-            type="text"
-            name="postTitle"
-            value={formData.postTitle}
-            onChange={handleChange}
-            disabled={isLoading}
-            className="input input-bordered w-full"
-          />
-        </div>
+
         <div>
           <label className="block text-sm font-medium mb-1">Category</label>
           <select
@@ -148,17 +149,7 @@ const UpdatePost = () => {
             className="input input-bordered w-full"
           />
         </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">
-            Organizer Name
-          </label>
-          <input
-            type="text"
-            value={formData.organizerName}
-            readOnly
-            className="input input-bordered w-full bg-gray-200"
-          />
-        </div>
+
         <div>
           <label className="block text-sm font-medium mb-1">Description</label>
           <textarea
@@ -180,6 +171,17 @@ const UpdatePost = () => {
             onChange={handleChange}
             disabled={isLoading}
             className="input input-bordered w-full"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium mb-1">
+            Organizer Name
+          </label>
+          <input
+            type="text"
+            value={formData.organizerName}
+            readOnly
+            className="input input-bordered w-full bg-gray-200"
           />
         </div>
         <div>

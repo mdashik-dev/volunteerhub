@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import api from "../../services/api";
 import { PostsSkeleton } from "../../skeletons/PostsSkeleton";
+import moment from "moment";
 
 const VolunteerNeedsNow = () => {
   const fetchPosts = async () => {
@@ -65,7 +66,7 @@ const VolunteerNeedsNow = () => {
                 Category: {post.category}
               </p>
               <p className="text-gray-700 text-lg mb-4 dark:text-gray-300">
-                Deadline: {new Date(post.deadline).toLocaleDateString()}
+                Deadline: {moment(post.deadline).format("DD MMMM YYYY")}
               </p>
               <Link
                 to={`/posts/${post._id}`}
