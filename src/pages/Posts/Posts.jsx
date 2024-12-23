@@ -5,6 +5,7 @@ import { IoGrid } from "react-icons/io5";
 import { FaThList } from "react-icons/fa";
 import { PostsSkeleton } from "../../skeletons/PostsSkeleton";
 import api from "../../services/api";
+import BeAVolunteerBtn from "../BeAVolunteer/BeAVolunteerBtn";
 
 const AllVolunteerPosts = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -95,6 +96,7 @@ const AllVolunteerPosts = () => {
                     <strong>Posted By:</strong> {post.organizerName}
                   </p>
                   <div className="card-actions justify-end mt-4">
+                    <BeAVolunteerBtn post={post} />
                     <Link
                       to={`/posts/${post._id}`}
                       className="btn btn-primary btn-sm"

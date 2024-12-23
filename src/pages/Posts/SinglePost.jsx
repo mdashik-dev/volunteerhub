@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { PostsSkeleton } from "../../skeletons/PostsSkeleton";
 import moment from "moment";
+import BeAVolunteerBtn from "../BeAVolunteer/BeAVolunteerBtn";
 
 const SinglePost = () => {
   const { id } = useParams();
@@ -82,12 +83,15 @@ const SinglePost = () => {
             "No additional description available for this post."}
         </p>
 
-        <button
-          className="btn btn-primary w-full sm:w-auto"
-          onClick={() => window.history.back()}
-        >
-          Go Back
-        </button>
+        <div className="flex gap-2">
+          <button
+            className="btn btn-primary btn-sm"
+            onClick={() => window.history.back()}
+          >
+            Go Back
+          </button>
+          <BeAVolunteerBtn post={current} />
+        </div>
       </div>
     </div>
   );
