@@ -12,6 +12,7 @@ import {
 import { createContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { app } from "../services/firebase.config";
+import api from "../services/api";
 
 const AuthContext = createContext();
 
@@ -25,6 +26,28 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
+
+      if (currentUser?.email) {
+        api
+          .post(
+            "/jwt",
+            { email: currentUser?.email },
+            {
+              withCredentials: true,
+            }
+          )
+          .then((res) => {});
+      } else {
+        api
+          .post(
+            "/logout",
+            {},
+            {
+              withCredentials: true,
+            }
+          )
+          .then((res) => {});
+      }
     });
 
     return () => unsubscribe();

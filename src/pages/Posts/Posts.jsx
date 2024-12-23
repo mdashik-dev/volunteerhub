@@ -177,7 +177,7 @@ const AllVolunteerPosts = () => {
           )}
 
           <div className="flex justify-center mt-6">
-            <div className="btn-group bg-white space-x-2 p-2 rounded-lg">
+            <div className="btn-group bg-white dark:bg-gray-800 space-x-2 p-2 rounded-lg">
               {[...Array(totalPages)].map((_, index) => (
                 <button
                   key={index}

@@ -61,7 +61,7 @@ const UpdatePost = () => {
     e.preventDefault();
     delete formData._id;
     try {
-      await api.put(`/posts/${id}`, formData);
+      await api.put(`/posts/${id}`, formData, { withCredentials: true });
       Swal.fire("Success", "Post updated successfully!", "success");
       navigate("/posts");
     } catch (error) {

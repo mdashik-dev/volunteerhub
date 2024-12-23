@@ -11,7 +11,9 @@ const ManageMyVolunteerPosts = () => {
   const navigate = useNavigate();
 
   const fetchPosts = async () => {
-    const response = await api.get(`/myposts?email=${user?.email}`);
+    const response = await api.get(`/myposts?email=${user?.email}`, {
+      withCredentials: true,
+    });
     return response?.data;
   };
 
@@ -36,7 +38,7 @@ const ManageMyVolunteerPosts = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         try {
-          await api.delete(`/posts/${id}`);
+          await api.delete(`/posts/${id}`, { withCredentials: true });
           Swal.fire("Success", "Post deleted successfully!", "success");
           navigate("/posts");
         } catch (error) {}

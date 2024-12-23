@@ -60,11 +60,15 @@ const AddVolunteerNeedPost = () => {
     setLoading(true);
 
     try {
-      const res = await api.post("/add-post", {
-        ...formData,
-        organizerName: user.displayName,
-        organizerEmail: user.email,
-      });
+      const res = await api.post(
+        "/add-post",
+        {
+          ...formData,
+          organizerName: user.displayName,
+          organizerEmail: user.email,
+        },
+        { withCredentials: true }
+      );
 
       if (res) {
         setFormData({

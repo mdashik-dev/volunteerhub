@@ -12,7 +12,9 @@ const MyVolunteerRequestsPage = () => {
   const fetchRequests = async () => {
     try {
       setLoading(true);
-      const response = await api.get(`/volunteer-requests/${user.email}`);
+      const response = await api.get(`/volunteer-requests/${user.email}`, {
+        withCredentials: true,
+      });
       setVolunteerRequests(response.data);
     } catch (error) {
       Swal.fire("Error", "Failed to fetch your volunteer requests.", "error");
@@ -38,7 +40,9 @@ const MyVolunteerRequestsPage = () => {
 
     if (result.isConfirmed) {
       try {
-        await api.delete(`/volunteer-requests/${id}`);
+        await api.delete(`/volunteer-requests/${id}`, {
+          withCredentials: true,
+        });
         Swal.fire(
           "Cancelled",
           "Your volunteer request has been cancelled.",

@@ -27,7 +27,9 @@ const BeVolunteerModal = ({ postData, onClose }) => {
     };
 
     try {
-      const res = await api.post("/volunteer-requests", volunteerData);
+      const res = await api.post("/volunteer-requests", volunteerData, {
+        withCredentials: true,
+      });
       if (res) {
         Swal.fire("Success", "Your request has been submitted!", "success");
         onClose();
