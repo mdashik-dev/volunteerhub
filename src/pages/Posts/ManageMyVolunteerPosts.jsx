@@ -1,49 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
+import { AuthContext } from "../../contexts/AuthContext";
+import api from "../../services/api";
 
 const ManageMyVolunteerPosts = () => {
-  const [myPosts, setMyPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
-  const loggedInUser = {
-    id: "123",
-    name: "Jane Doe",
-    email: "jane.doe@example.com",
+  const fetchPosts = async () => {
+    const response = await api.get(`/myposts?email=${user?.email}`);
+    return response?.data;
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-
-      const fetchedPosts = [
-        {
-          id: "1",
-          title: "Teach English to Refugees",
-          location: "New York, NY",
-          volunteersNeeded: 10,
-          deadline: "2024-01-15",
-          createdBy: "jane.doe@example.com",
-        },
-        {
-          id: "2",
-          title: "Community Park Cleanup",
-          location: "Los Angeles, CA",
-          volunteersNeeded: 20,
-          deadline: "2024-02-20",
-          createdBy: "jane.doe@example.com",
-        },
-      ];
-
-      const userPosts = fetchedPosts.filter(
-        (post) => post.createdBy === loggedInUser.email
-      );
-
-      setMyPosts(userPosts);
-      setLoading(false);
-    };
-
-    fetchData();
-  }, [loggedInUser.email]);
+  const {
+    data: myPosts = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["myposts"],
+    queryFn: fetchPosts,
+  });
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -54,16 +32,15 @@ const ManageMyVolunteerPosts = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        setMyPosts((prev) => prev.filter((post) => post.id !== id));
-        Swal.fire("Deleted!", "The post has been deleted.", "success");
+        try {
+          await api.delete(`/posts/${id}`);
+          Swal.fire("Success", "Post deleted successfully!", "success");
+          navigate("/posts");
+        } catch (error) {}
       }
     });
-  };
-
-  const handleUpdate = (id) => {
-    console.log("Update Post ID:", id);
   };
 
   return (
@@ -73,7 +50,7 @@ const ManageMyVolunteerPosts = () => {
           Manage My Volunteer Need Posts
         </h2>
 
-        {loading ? (
+        {isLoading ? (
           <p className="text-center text-gray-600 dark:text-gray-300">
             Loading your posts...
           </p>
@@ -105,9 +82,9 @@ const ManageMyVolunteerPosts = () => {
               </thead>
               <tbody>
                 {myPosts.map((post) => (
-                  <tr key={post.id}>
+                  <tr key={post._id}>
                     <td className="px-4 py-2 border border-gray-300 dark:border-gray-600">
-                      {post.title}
+                      {post.postTitle}
                     </td>
                     <td className="px-4 py-2 border border-gray-300 dark:border-gray-600">
                       {post.location}
@@ -120,14 +97,14 @@ const ManageMyVolunteerPosts = () => {
                     </td>
                     <td className="px-4 py-2 border border-gray-300 dark:border-gray-600">
                       <div className="flex gap-2">
-                        <button
-                          onClick={() => handleUpdate(post.id)}
+                        <Link
+                          to={`/update-post/${post._id}`}
                           className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-md"
                         >
                           Update
-                        </button>
+                        </Link>
                         <button
-                          onClick={() => handleDelete(post.id)}
+                          onClick={() => handleDelete(post._id)}
                           className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-md"
                         >
                           Delete

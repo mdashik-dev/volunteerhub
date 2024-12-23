@@ -1,48 +1,51 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import Swal from "sweetalert2";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SocialLogin from "./SocialLogin";
 
-const LoginPage = () => {
+const RegisterPage = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [photoURL, setPhotoURL] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const { user, loginWithEmailAndPass } = useContext(AuthContext);
+  const { registerUserWithEmailAndPass } = useContext(AuthContext);
   const navigate = useNavigate();
-  const location = useLocation();
 
-  useEffect(() => {
-    if (user?.uid) {
-      if (location?.state?.from) {
-        navigate(location.state.from.pathname);
-      } else {
-        navigate("/");
-      }
-    }
-  }, [user, navigate, location?.state?.from]);
+  // Password validation regex
+  const passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.{6,})/;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email || !password) {
+
+    if (!email || !password || !name || !photoURL) {
       setError("Please fill in all fields.");
-    } else {
-      setError("");
-      setLoading(true);
-      try {
-        await loginWithEmailAndPass(email, password);
-        Swal.fire("Success", "You have logged in successfully!", "success");
-      } catch (error) {
-        Swal.fire(
-          "Error",
-          error.message || "Login failed. Please try again.",
-          "error"
-        );
-      } finally {
-        setLoading(false);
-      }
+      return;
+    }
+
+    if (!passwordValidation.test(password)) {
+      setError(
+        "Password must contain at least one uppercase letter, one lowercase letter, and be at least 6 characters long."
+      );
+      return;
+    }
+
+    setError("");
+    setLoading(true);
+    try {
+      await registerUserWithEmailAndPass(email, password, name, photoURL);
+      navigate("/login");
+    } catch (error) {
+      Swal.fire(
+        "Error",
+        error.message || "Registration failed. Please try again.",
+        "error"
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -50,7 +53,7 @@ const LoginPage = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 dark:text-white">
       <div className="w-full max-w-sm bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center mb-4">
-          Sign in to your account
+          Create an account
         </h2>
 
         {error && <div className="text-red-500 text-center mb-4">{error}</div>}
@@ -58,11 +61,33 @@ const LoginPage = () => {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <input
+              type="text"
+              id="name"
+              placeholder="Full Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full px-4 py-2 rounded-md dark:bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary placeholder-gray-400"
+              required
+            />
+          </div>
+          <div>
+            <input
               type="email"
               id="email"
               placeholder="Email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-2 rounded-md dark:bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary placeholder-gray-400"
+              required
+            />
+          </div>
+          <div>
+            <input
+              type="url"
+              id="photoURL"
+              placeholder="Profile Picture URL"
+              value={photoURL}
+              onChange={(e) => setPhotoURL(e.target.value)}
               className="w-full px-4 py-2 rounded-md dark:bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary placeholder-gray-400"
               required
             />
@@ -77,19 +102,6 @@ const LoginPage = () => {
               className="w-full px-4 py-2 rounded-md dark:bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary placeholder-gray-400"
               required
             />
-          </div>
-
-          <div className="flex items-center justify-between text-sm">
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                className="form-checkbox h-4 w-4 text-primary dark:bg-gray-800 border-gray-600 rounded focus:ring-primary"
-              />
-              <span>Remember me</span>
-            </label>
-            <a href="#" className="text-primary hover:underline">
-              Forgot your password?
-            </a>
           </div>
 
           <button
@@ -119,19 +131,17 @@ const LoginPage = () => {
                 ></path>
               </svg>
             ) : (
-              "Sign in"
+              "Sign up"
             )}
           </button>
         </form>
+
         <SocialLogin />
 
         <p className="text-xs text-center sm:px-6 dark:text-gray-600">
-          Don't have an account?{" "}
-          <Link
-            to="/register"
-            className="underline text-gray-800 dark:text-white"
-          >
-            Sign up
+          Already have an account?{" "}
+          <Link to="/login" className="underline text-gray-800 dark:text-white">
+            Log in
           </Link>
         </p>
       </div>
@@ -139,4 +149,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

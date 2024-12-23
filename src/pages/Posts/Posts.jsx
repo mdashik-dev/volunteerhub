@@ -1,55 +1,33 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 import { IoGrid } from "react-icons/io5";
 import { FaThList } from "react-icons/fa";
+import { PostsSkeleton } from "../../skeletons/PostsSkeleton";
+import api from "../../services/api";
 
 const AllVolunteerPosts = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [layout, setLayout] = useState("card"); 
+  const [layout, setLayout] = useState("card");
 
-  const posts = [
-    {
-      id: "1",
-      title: "Teach English to Refugees",
-      category: "Education",
-      location: "New York, NY",
-      postedBy: "Jane Doe",
-    },
-    {
-      id: "2",
-      title: "Community Park Cleanup",
-      category: "Environment",
-      location: "Los Angeles, CA",
-      postedBy: "John Smith",
-    },
-    {
-      id: "3",
-      title: "Food Drive Volunteer",
-      category: "Charity",
-      location: "Chicago, IL",
-      postedBy: "Alice Johnson",
-    },
-  ];
-
-  const fetchPosts = async (query = "") => {
-    try {
-      setLoading(true);
-      const response = await axios.get(
-        `/api/posts${query ? `?search=${query}` : ""}`
-      );
-      setPosts(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching posts:", error);
-      setLoading(false);
-    }
+  const fetchPosts = async (searchQuery) => {
+    const response = await api.get(
+      `/posts${searchQuery && `?search=${searchQuery}`}`
+    );
+    return response?.data;
   };
+
+  const {
+    data: posts = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["posts", searchQuery],
+    queryFn: () => fetchPosts(searchQuery),
+  });
 
   const handleSearch = (e) => {
     e.preventDefault();
-    fetchPosts(searchQuery);
   };
 
   const toggleLayout = () => {
@@ -57,7 +35,7 @@ const AllVolunteerPosts = () => {
   };
 
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="container mx-auto py-8 px-4 dark:bg-gray-900 dark:text-white">
       <h1 className="text-3xl font-bold text-center mb-6">
         All Volunteer Need Posts
       </h1>
@@ -68,7 +46,7 @@ const AllVolunteerPosts = () => {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search by Post Title"
-          className="input input-bordered w-full max-w-md"
+          className="input input-bordered w-full max-w-md dark:bg-gray-700 dark:placeholder-gray-400"
         />
         <button type="submit" className="btn btn-primary ml-2">
           Search
@@ -84,15 +62,29 @@ const AllVolunteerPosts = () => {
         </button>
       </div>
 
-      {loading ? (
-        <p className="text-center">Loading posts...</p>
+      {isLoading ? (
+        <div className="w-full flex gap-3">
+          <PostsSkeleton />
+          <PostsSkeleton />
+        </div>
+      ) : isError ? (
+        <p className="text-center text-red-500">Error fetching posts.</p>
       ) : posts?.length > 0 ? (
         layout === "card" ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {posts?.map((post) => (
-              <div key={post.id} className="card bg-base-100 shadow-md">
+            {posts.map((post) => (
+              <div key={post.id} className="card bg-base-100 dark:bg-gray-800">
+                <figure>
+                  <img
+                    src={post.thumbnail || "https://via.placeholder.com/150"}
+                    alt={post.postTitle}
+                    className="w-full h-48 object-cover"
+                  />
+                </figure>
                 <div className="card-body">
-                  <h2 className="card-title text-lg font-bold">{post.title}</h2>
+                  <h2 className="card-title text-lg font-bold">
+                    {post.postTitle}
+                  </h2>
                   <p className="text-sm">
                     <strong>Category:</strong> {post.category}
                   </p>
@@ -100,11 +92,11 @@ const AllVolunteerPosts = () => {
                     <strong>Location:</strong> {post.location}
                   </p>
                   <p className="text-sm">
-                    <strong>Posted By:</strong> {post.postedBy}
+                    <strong>Posted By:</strong> {post.organizerName}
                   </p>
                   <div className="card-actions justify-end mt-4">
                     <Link
-                      to={`/posts/${post.id}`}
+                      to={`/posts/${post._id}`}
                       className="btn btn-primary btn-sm"
                     >
                       View Details
@@ -116,26 +108,44 @@ const AllVolunteerPosts = () => {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="table w-full border-collapse border border-gray-300">
+            <table className="table w-full border-collapse border bg-white border-gray-300 dark:border-gray-700">
               <thead>
-                <tr className="bg-gray-200">
-                  <th className="px-4 py-2 border">Title</th>
-                  <th className="px-4 py-2 border">Category</th>
-                  <th className="px-4 py-2 border">Location</th>
-                  <th className="px-4 py-2 border">Posted By</th>
-                  <th className="px-4 py-2 border">Actions</th>
+                <tr className="bg-gray-200 dark:bg-gray-800">
+                  <th className="px-4 py-2 border dark:border-gray-700">
+                    Title
+                  </th>
+                  <th className="px-4 py-2 border dark:border-gray-700">
+                    Category
+                  </th>
+                  <th className="px-4 py-2 border dark:border-gray-700">
+                    Location
+                  </th>
+                  <th className="px-4 py-2 border dark:border-gray-700">
+                    Posted By
+                  </th>
+                  <th className="px-4 py-2 border dark:border-gray-700">
+                    Actions
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {posts.map((post) => (
-                  <tr key={post.id}>
-                    <td className="px-4 py-2 border">{post.title}</td>
-                    <td className="px-4 py-2 border">{post.category}</td>
-                    <td className="px-4 py-2 border">{post.location}</td>
-                    <td className="px-4 py-2 border">{post.postedBy}</td>
-                    <td className="px-4 py-2 border">
+                  <tr key={post.id} className="dark:bg-gray-700">
+                    <td className="px-4 py-2 border dark:border-gray-700">
+                      {post.postTitle}
+                    </td>
+                    <td className="px-4 py-2 border dark:border-gray-700">
+                      {post.category}
+                    </td>
+                    <td className="px-4 py-2 border dark:border-gray-700">
+                      {post.location}
+                    </td>
+                    <td className="px-4 py-2 border dark:border-gray-700">
+                      {post.organizerName}
+                    </td>
+                    <td className="px-4 py-2 border dark:border-gray-700">
                       <Link
-                        to={`/posts/${post.id}`}
+                        to={`/posts/${post._id}`}
                         className="btn btn-primary btn-sm"
                       >
                         View Details
@@ -148,7 +158,9 @@ const AllVolunteerPosts = () => {
           </div>
         )
       ) : (
-        <p className="text-center text-gray-500">No posts found.</p>
+        <p className="text-center text-gray-500 dark:text-gray-400">
+          No posts found.
+        </p>
       )}
     </div>
   );

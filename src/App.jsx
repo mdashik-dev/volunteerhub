@@ -12,6 +12,11 @@ import PrivateRoute from "./components/PrivateRoute";
 import AllVolunteerPosts from "./pages/Posts/Posts";
 import ManageMyVolunteerPosts from "./pages/Posts/ManageMyVolunteerPosts";
 import { AuthProvider } from "./contexts/AuthContext";
+import SinglePost from "./pages/Posts/SinglePost";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import UpdatePost from "./pages/Posts/UpdatePost";
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -23,7 +28,14 @@ const router = createBrowserRouter([
       { path: "/login", element: <LoginPage /> },
       { path: "/register", element: <RegisterPage /> },
       { path: "/posts", element: <AllVolunteerPosts /> },
-      // { path: "/volunteer/:id", element: <VolunteerDetailsPage /> },
+      {
+        path: "/posts/:id",
+        element: (
+          <PrivateRoute>
+            <SinglePost />
+          </PrivateRoute>
+        ),
+      },
       {
         path: "/add-post",
         element: (
@@ -40,6 +52,14 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
       },
+      {
+        path: "/update-post/:id",
+        element: (
+          <PrivateRoute>
+            <UpdatePost />
+          </PrivateRoute>
+        ),
+      },
     ],
   },
   { path: "*", element: <NotFound /> },
@@ -47,13 +67,15 @@ const router = createBrowserRouter([
 
 const App = () => {
   return (
-    <AuthProvider>
-      <ThemeProvider>
-        <HelmetProvider>
-          <RouterProvider router={router} />
-        </HelmetProvider>
-      </ThemeProvider>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <ThemeProvider>
+          <HelmetProvider>
+            <RouterProvider router={router} />
+          </HelmetProvider>
+        </ThemeProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 };
 

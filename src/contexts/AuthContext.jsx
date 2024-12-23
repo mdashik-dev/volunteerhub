@@ -11,7 +11,7 @@ import {
 } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { app } from "../services/src/services/firebase.config";
+import { app } from "../services/firebase.config";
 
 const AuthContext = createContext();
 

@@ -4,6 +4,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { Link } from "react-router-dom";
 
 const BannerSlider = () => {
   return (
@@ -37,12 +38,12 @@ const BannerSlider = () => {
                   Join us in making the world a better place by volunteering
                   your time and skills.
                 </p>
-                <a
-                  href="/posts"
+                <Link
+                  to="/posts"
                   className="btn btn-primary text-white px-6 py-3 rounded-md"
                 >
                   Get Involved
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -52,7 +53,8 @@ const BannerSlider = () => {
           <div
             className="relative bg-cover bg-center h-[500px]"
             style={{
-              backgroundImage: "url(https://uploads.donorperfect.com/images/sites/3/volunteer-matrix-header-1.jpg)",
+              backgroundImage:
+                "url(https://uploads.donorperfect.com/images/sites/3/volunteer-matrix-header-1.jpg)",
             }}
           >
             <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -65,12 +67,12 @@ const BannerSlider = () => {
                   Volunteer with us and help create better opportunities for
                   communities in need.
                 </p>
-                <a
-                  href="/posts"
+                <Link
+                  to="/posts"
                   className="btn btn-primary text-white px-6 py-3 rounded-md"
                 >
                   Explore Opportunities
-                </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -80,7 +82,8 @@ const BannerSlider = () => {
           <div
             className="relative bg-cover bg-center h-[500px]"
             style={{
-              backgroundImage: "url(https://neoadulted.org/wp-content/uploads/2022/06/group-of-volunteer-having-fun-1024x682.jpg)",
+              backgroundImage:
+                "url(https://neoadulted.org/wp-content/uploads/2022/06/group-of-volunteer-having-fun-1024x682.jpg)",
             }}
           >
             <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -93,12 +96,12 @@ const BannerSlider = () => {
                   Be part of a global network of individuals working to make a
                   meaningful impact.
                 </p>
-                <a
-                  href="/posts"
+                <Link
+                  to="/posts"
                   className="btn btn-primary text-white px-6 py-3 rounded-md"
                 >
                   Learn More
-                </a>
+                </Link>
               </div>
             </div>
           </div>
