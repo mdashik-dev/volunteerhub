@@ -154,6 +154,16 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li>
+                    <Link
+                      to="/volunteer-requests"
+                      className={
+                        isActive("/volunteer-requests") ? "bg-primary text-white" : ""
+                      }
+                    >
+                      Volunteer Requests
+                    </Link>
+                  </li>
+                  <li>
                     <button onClick={logOut} className="px-4 py-2">
                       Logout
                     </button>

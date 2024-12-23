@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import Swal from "sweetalert2";
+import api from "../../services/api";
 
 const BeVolunteerModal = ({ postData, onClose }) => {
   const { user } = useContext(AuthContext);
@@ -26,9 +27,11 @@ const BeVolunteerModal = ({ postData, onClose }) => {
     };
 
     try {
-      console.log(volunteerData);
-      Swal.fire("Success", "Your request has been submitted!", "success");
-      onClose();
+      const res = await api.post("/volunteer-requests", volunteerData);
+      if (res) {
+        Swal.fire("Success", "Your request has been submitted!", "success");
+        onClose();
+      }
     } catch (error) {
       Swal.fire("Error", "Failed to submit the request. Try again.", "error");
     }
@@ -92,7 +95,7 @@ const BeVolunteerModal = ({ postData, onClose }) => {
           </div>
         </div>
 
-        <div className="flex justify-end mt-4 space-x-2 pb-2">
+        <div className="flex justify-end space-x-2 pb-5 pr-5">
           <button
             onClick={onClose}
             className="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500"

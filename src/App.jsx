@@ -15,7 +15,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import SinglePost from "./pages/Posts/SinglePost";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UpdatePost from "./pages/Posts/UpdatePost";
-import BeAVolunteer from "./pages/BeAVolunteer/BeAVolunteer";
+import MyVolunteerRequestsPage from "./pages/BeAVolunteer/MyVolunteerRequestsPage";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +58,14 @@ const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <UpdatePost />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/volunteer-requests",
+        element: (
+          <PrivateRoute>
+            <MyVolunteerRequestsPage />
           </PrivateRoute>
         ),
       },
