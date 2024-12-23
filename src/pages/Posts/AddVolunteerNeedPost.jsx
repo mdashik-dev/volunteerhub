@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import "react-datepicker/dist/react-datepicker.css";
 import api from "../../services/api";
 import { AuthContext } from "../../contexts/AuthContext";
+import { Helmet } from "react-helmet-async";
 
 const AddVolunteerNeedPost = () => {
   const [formData, setFormData] = useState({
@@ -96,6 +97,9 @@ const AddVolunteerNeedPost = () => {
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-10">
       <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+        <Helmet>
+          <title>Add Volunteer Need Post</title>
+        </Helmet>
         <h2 className="text-2xl font-bold text-center mb-6 dark:text-white">
           Add Volunteer Need Post
         </h2>

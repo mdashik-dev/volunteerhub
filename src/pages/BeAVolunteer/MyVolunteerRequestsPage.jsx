@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import api from "../../services/api";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../contexts/AuthContext";
+import { Helmet } from "react-helmet-async";
 
 const MyVolunteerRequestsPage = () => {
   const [volunteerRequests, setVolunteerRequests] = useState([]);
@@ -57,7 +58,9 @@ const MyVolunteerRequestsPage = () => {
   return (
     <div className="min-h-[calc(100vh-150px)] p-6 bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white">
       <h1 className="text-2xl font-bold mb-4">My Volunteer Requests</h1>
-
+      <Helmet>
+        <title>My Volunteer Requests</title>
+      </Helmet>
       {loading ? (
         <p>Loading...</p>
       ) : volunteerRequests.length === 0 ? (

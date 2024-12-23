@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { PostsSkeleton } from "../../skeletons/PostsSkeleton";
 import moment from "moment";
 import BeAVolunteerBtn from "../BeAVolunteer/BeAVolunteerBtn";
+import { Helmet } from "react-helmet-async";
 
 const SinglePost = () => {
   const { id } = useParams();
@@ -45,6 +46,9 @@ const SinglePost = () => {
 
   return (
     <div className="max-w-4xl mx-auto my-8 p-6 bg-white dark:bg-gray-800 rounded-lg">
+      <Helmet>
+        <title>Details</title>
+      </Helmet>
       <figure className="w-full h-72 overflow-hidden rounded-md">
         <img
           src={current?.thumbnail}

@@ -12,7 +12,7 @@ const VolunteerNeedsNow = () => {
   };
 
   const {
-    data: posts = [],
+    data,
     isLoading,
     isError,
   } = useQuery({
@@ -37,7 +37,7 @@ const VolunteerNeedsNow = () => {
     );
   }
 
-  const sortedPosts = posts.sort(
+  const sortedPosts = data?.posts?.sort(
     (a, b) => new Date(a.deadline) - new Date(b.deadline)
   );
   const postsToShow = sortedPosts.slice(0, 6);

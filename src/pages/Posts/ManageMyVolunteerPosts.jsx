@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../contexts/AuthContext";
 import api from "../../services/api";
+import { Helmet } from "react-helmet-async";
 
 const ManageMyVolunteerPosts = () => {
   const { user } = useContext(AuthContext);
@@ -46,6 +47,9 @@ const ManageMyVolunteerPosts = () => {
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-10">
       <div className="max-w-6xl mx-auto bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+        <Helmet>
+          <title>Manage My Volunteer Need Posts</title>
+        </Helmet>
         <h2 className="text-2xl font-bold text-center mb-6 dark:text-white">
           Manage My Volunteer Need Posts
         </h2>
