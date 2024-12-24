@@ -25,7 +25,9 @@ const UpdatePost = () => {
   });
 
   const fetchPost = async () => {
-    const response = await api.get(`/myposts?id=${id}`);
+    const response = await api.get(`/myposts?id=${id}`, {
+      withCredentials: true,
+    });
     return response?.data[0];
   };
 

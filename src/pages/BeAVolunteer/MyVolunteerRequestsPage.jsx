@@ -17,7 +17,6 @@ const MyVolunteerRequestsPage = () => {
       });
       setVolunteerRequests(response.data);
     } catch (error) {
-      Swal.fire("Error", "Failed to fetch your volunteer requests.", "error");
     } finally {
       setLoading(false);
     }

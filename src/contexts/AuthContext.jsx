@@ -13,6 +13,8 @@ import { createContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { app } from "../services/firebase.config";
 import api from "../services/api";
+import { FaSpinner } from "react-icons/fa";
+import { Bounce } from "react-awesome-reveal";
 
 const AuthContext = createContext();
 
@@ -46,9 +48,7 @@ const AuthProvider = ({ children }) => {
               withCredentials: true,
             }
           )
-          .then((res) => {
-
-          });
+          .then((res) => {});
       }
     });
 
@@ -160,13 +160,13 @@ const AuthProvider = ({ children }) => {
       {!loading ? (
         children
       ) : (
-        <div className="flex justify-center items-center h-screen bg-gray-50">
-          <div className="relative">
-            <div className="w-16 h-16 rounded-full border-4 border-t-primary border-gray-300 animate-spin"></div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-8 h-8 rounded-full bg-primary"></div>
-            </div>
-          </div>
+        <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+          <Bounce>
+            <FaSpinner className="text-6xl text-primary animate-spin" />
+          </Bounce>
+          <p className="mt-4 text-lg font-semibold text-gray-700">
+            Loading, please wait...
+          </p>
         </div>
       )}
     </AuthContext.Provider>

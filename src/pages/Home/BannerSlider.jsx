@@ -5,6 +5,7 @@ import "swiper/css/navigation";
 
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import { Link } from "react-router-dom";
+import { Fade } from "react-awesome-reveal";
 
 const BannerSlider = () => {
   return (
@@ -31,19 +32,25 @@ const BannerSlider = () => {
             <div className="absolute inset-0 bg-black opacity-50"></div>
             <div className="absolute inset-0 flex justify-center items-center text-center text-white">
               <div>
-                <h2 className="text-4xl font-extrabold mb-4">
-                  Make a Difference
-                </h2>
-                <p className="text-lg mb-6">
-                  Join us in making the world a better place by volunteering
-                  your time and skills.
-                </p>
-                <Link
-                  to="/posts"
-                  className="btn btn-primary text-white px-6 py-3 rounded-md"
-                >
-                  Get Involved
-                </Link>
+                <Fade direction="down">
+                  <h2 className="text-4xl font-extrabold mb-4">
+                    Make a Difference
+                  </h2>
+                </Fade>
+                <Fade direction="up">
+                  <p className="text-lg mb-6">
+                    Join us in making the world a better place by volunteering
+                    your time and skills.
+                  </p>
+                </Fade>
+                <Fade>
+                  <Link
+                    to="/posts"
+                    className="btn btn-primary text-white px-6 py-3 rounded-md"
+                  >
+                    Get Involved
+                  </Link>
+                </Fade>
               </div>
             </div>
           </div>
@@ -60,19 +67,25 @@ const BannerSlider = () => {
             <div className="absolute inset-0 bg-black opacity-50"></div>
             <div className="absolute inset-0 flex justify-center items-center text-center text-white">
               <div>
-                <h2 className="text-4xl font-extrabold mb-4">
-                  Your Time, Their Future
-                </h2>
-                <p className="text-lg mb-6">
-                  Volunteer with us and help create better opportunities for
-                  communities in need.
-                </p>
-                <Link
-                  to="/posts"
-                  className="btn btn-primary text-white px-6 py-3 rounded-md"
-                >
-                  Explore Opportunities
-                </Link>
+                <Fade direction="down">
+                  <h2 className="text-4xl font-extrabold mb-4">
+                    Your Time, Their Future
+                  </h2>
+                </Fade>
+                <Fade direction="up">
+                  <p className="text-lg mb-6">
+                    Volunteer with us and help create better opportunities for
+                    communities in need.
+                  </p>
+                </Fade>
+                <Fade>
+                  <Link
+                    to="/posts"
+                    className="btn btn-primary text-white px-6 py-3 rounded-md"
+                  >
+                    Explore Opportunities
+                  </Link>
+                </Fade>
               </div>
             </div>
           </div>
@@ -89,19 +102,25 @@ const BannerSlider = () => {
             <div className="absolute inset-0 bg-black opacity-50"></div>
             <div className="absolute inset-0 flex justify-center items-center text-center text-white">
               <div>
-                <h2 className="text-4xl font-extrabold mb-4">
-                  Join a Community of Change
-                </h2>
-                <p className="text-lg mb-6">
-                  Be part of a global network of individuals working to make a
-                  meaningful impact.
-                </p>
-                <Link
-                  to="/posts"
-                  className="btn btn-primary text-white px-6 py-3 rounded-md"
-                >
-                  Learn More
-                </Link>
+                <Fade direction="down">
+                  <h2 className="text-4xl font-extrabold mb-4">
+                    Join a Community of Change
+                  </h2>
+                </Fade>
+                <Fade direction="up">
+                  <p className="text-lg mb-6">
+                    Be part of a global network of individuals working to make a
+                    meaningful impact.
+                  </p>
+                </Fade>
+                <Fade>
+                  <Link
+                    to="/posts"
+                    className="btn btn-primary text-white px-6 py-3 rounded-md"
+                  >
+                    Learn More
+                  </Link>
+                </Fade>
               </div>
             </div>
           </div>
