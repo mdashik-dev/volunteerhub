@@ -17,9 +17,6 @@ Welcome to **VolunteerHub**, your go-to platform for discovering, managing, and 
 3. **User Authentication**  
    Secure login and sign-up to personalize your experience and manage your volunteer history.  
 
-4. **Interactive Dashboard**  
-   Keep track of your volunteering activities, hours logged, and upcoming events.  
-
 5. **Mobile-Responsive Design**  
    A fully responsive interface ensures an intuitive experience across all devices, from desktops to smartphones.  
 
