@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { IoIosMoon } from "react-icons/io";
 import { MdSunny } from "react-icons/md";
@@ -15,6 +15,7 @@ const Navbar = () => {
   const toggleTheme = () => {
     setTheme(theme === "light" ? "dark" : "light");
   };
+
   const isActive = (path) => location.pathname === path;
 
   return (
@@ -58,21 +59,33 @@ const Navbar = () => {
                 <li>
                   <Link
                     to="/posts"
-                    className={
-                      isActive("/posts") ? "bg-primary text-white" : ""
-                    }
+                    className={isActive("/posts") ? "bg-primary text-white" : ""}
                   >
                     All Volunteer Posts
                   </Link>
                 </li>
                 <li>
                   <Link
-                    to="/login"
-                    className={
-                      isActive("/login") ? "bg-primary text-white" : ""
-                    }
+                    to="/faq"
+                    className={isActive("/faq") ? "bg-primary text-white" : ""}
                   >
-                    Login
+                    FAQ
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/about"
+                    className={isActive("/about") ? "bg-primary text-white" : ""}
+                  >
+                    About Us
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/contact"
+                    className={isActive("/contact") ? "bg-primary text-white" : ""}
+                  >
+                    Contact Us
                   </Link>
                 </li>
               </ul>
@@ -101,6 +114,30 @@ const Navbar = () => {
                   className={isActive("/posts") ? "bg-primary text-white" : ""}
                 >
                   All Volunteer Posts
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/faq"
+                  className={isActive("/faq") ? "bg-primary text-white" : ""}
+                >
+                  FAQ
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/about"
+                  className={isActive("/about") ? "bg-primary text-white" : ""}
+                >
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/contact"
+                  className={isActive("/contact") ? "bg-primary text-white" : ""}
+                >
+                  Contact Us
                 </Link>
               </li>
             </ul>

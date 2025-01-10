@@ -4,6 +4,9 @@ import VolunteerNeedsNow from "./VolunteerNeedsNow";
 import VolunteerTestimonials from "./VolunteerTestimonials";
 import HowItWorks from "./HowItWorks";
 import { Helmet } from "react-helmet-async";
+import PopularVolunteerOpportunities from "./PopularVolunteerOpportunities";
+import VolunteerImpactStats from "./VolunteerImpactStats";
+import UpcomingVolunteerEventsList from "./UpcomingVolunteerEventsList";
 
 function Home() {
   return (
@@ -13,6 +16,9 @@ function Home() {
       </Helmet>
       <BannerSlider />
       <VolunteerNeedsNow />
+      <PopularVolunteerOpportunities />
+      <VolunteerImpactStats />
+      <UpcomingVolunteerEventsList />
       <VolunteerTestimonials />
       <HowItWorks />
     </>
