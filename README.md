@@ -1,6 +1,6 @@
 # VolunteerHub 🌟
 
-Welcome to **VolunteerHub**, your go-to platform for discovering, managing, and participating in impactful volunteer opportunities. Whether you're passionate about community service or looking to organize a volunteer event, VolunteerHub makes it easy to connect, collaborate, and make a difference.  
+A web-based platform to streamline volunteer coordination. It enables organizers to manage activities, track volunteer participation, and enhance communication. Built with Firebase and designed for efficient volunteer management.
 
 🌐 **Live Site**: [VolunteerHub](https://volunteer-management-64b96.web.app/)
 
