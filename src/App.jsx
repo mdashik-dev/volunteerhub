@@ -16,7 +16,9 @@ import SinglePost from "./pages/Posts/SinglePost";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UpdatePost from "./pages/Posts/UpdatePost";
 import MyVolunteerRequestsPage from "./pages/BeAVolunteer/MyVolunteerRequestsPage";
-import FAQ from "./pages/Faq";
+import FAQ from "./pages/FAQ";
+import AboutUs from "./pages/AboutUs";
+import ContactUs from "./pages/ContactUs";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +33,8 @@ const router = createBrowserRouter([
       { path: "/register", element: <RegisterPage /> },
       { path: "/posts", element: <AllVolunteerPosts /> },
       { path: "/faq", element: <FAQ /> },
+      { path: "/about", element: <AboutUs /> },
+      { path: "/contact", element: <ContactUs /> },
       {
         path: "/posts/:id",
         element: (

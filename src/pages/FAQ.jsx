@@ -42,7 +42,7 @@ const FAQ = () => {
           {faqData.map((faq, index) => (
             <div
               key={index}
-              className="collapse collapse-arrow bg-white dark:bg-gray-800 shadow-lg rounded-lg"
+              className="collapse collapse-arrow bg-white dark:bg-gray-800 shadow rounded-lg"
             >
               <input type="checkbox" />
               <div className="collapse-title text-lg font-semibold text-gray-800 dark:text-white">
